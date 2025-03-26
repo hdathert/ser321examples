@@ -1,6 +1,14 @@
 // set as java application
 apply plugin: 'application'
 
+dependencies {
+  implementation 'org.glassfish:javax.json:1.1.4'
+}
+
+repositories {
+  mavenCentral()
+}
+
 //define main class
 mainClassName = 'SimpleServer'
 
