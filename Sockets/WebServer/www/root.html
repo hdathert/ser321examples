@@ -1,15 +1,65 @@
-<html>
+<html lang="en-US">
 	<head>
 		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+		<title>hdathert's fun webserver</title>
 	</head>
 	<body>
-		<h3>You can make the following GET requests<h3>
+		<h2>You can make the following GET requests</h2>
 		<ul>
-			<li>/file/sample.html -- returns the content of the file sample.html</li>
-			<li>/json -- returns a json of the /random request</a></li>
-			<li>/random -- returns index.html</a></li>
+			<li><code>/file/sample.html</code> -- returns the content of the file sample.html</li>
+			<li><code>/json</code> -- returns a json of the /random request</li>
+			<li><code>/random</code> -- returns index.html/li>
 		</ul>
-		<h3>File Structure in www (you can use /file/www/FILENAME):</h3>
+		<h2>You can also make the following queries</h2>
+		<ul>
+			<li>
+				<h3><code>/base-convert?</code></h3>
+				Converts a given number from base x to base y.<br>
+				<strong>Parameters:</strong>
+				<ul>
+					<li><code>num</code> : Input number to be converted</li>
+					<li><code>from</code> : Base to convert from</li>
+					<li><code>to</code> : Base to convert into</li>
+				</ul>
+				<strong>Example of use:</strong><br>
+				<code>/base-convert?num=23&from=10&to=2</code>
+			</li>
+			<li>
+				<h3><code>/weather?</code></h3>
+				Gets current weather forecast for place specified by coordinates. <br>
+				Supports both plain coordinates but also cardinal ones.<br>
+				<strong>Parameters:</strong>
+				<ul>
+					<li><code>lat</code> : Latitude input</li>
+					<li><code>lon</code> : Longitude input</li>
+				</ul>
+				<strong>Examples of use:</strong><br>
+				<code>/weather?lat=39.7456&lon=-97.0892</code> :: (Linn, KS)<br>
+				<code>/weather?lat=47.6061N&lon=122.3328W</code> :: (Seattle, WA)
+			</li>
+			<li>
+				<h3><code>/multiply?</code></h3>
+				Multiplies two numbers. <br>
+				<strong>Parameters:</strong>
+				<ul>
+					<li><code>num1</code> : first number</li>
+					<li><code>num2</code> : second number</li>
+				</ul>
+				<strong>Example of use:</strong><br>
+				<code>/multiply?num1=5&num2=3</code>
+			</li>
+			<li>
+				<h3><code>/github?</code></h3>
+				Finds the given user and displays information about their public GitHub repositories. <br>
+				<strong>Parameters:</strong>
+				<ul>
+					<li><code>query</code> : the url information for the given user, formatted as "<code>users/{USERNAME}/repos</code>"</li>
+				</ul>
+				<strong>Example of use:</strong><br>
+				<code>/github?query=users/amehlhase316/repos</code>
+			</li>
+		</ul>
+		<h2>File Structure in www (you can use /file/www/FILENAME):</h2>
 		${links}
 	</body>
 </html>

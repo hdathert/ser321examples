@@ -181,14 +181,6 @@ class WebServer {
    * @see <a href="https://www.weather.gov/documentation/services-web-api">NOAA API Documentation</a>
    */
   private void weather(String request, StringBuilder builder) {
-    // given a lat/long parse into a weather service APi to get current forecast for that area
-    // this will require two API requests from NOAA: one for finding the grid endpoint, and
-    // another for querying the grid endpoint for the forecast. This is all returned as well-defined
-    // JSON so it should be really easy to parse.
-    // https://www.weather.gov/documentation/services-web-api
-
-    // System.out.println("I've made it to weather!");
-
     try {
       int latSign = 1, lonSign = 1;
       Map<String,String> query_pairs = splitQuery(request.replace("weather?",""));
@@ -222,15 +214,11 @@ class WebServer {
       if (lon < -180 || lon > 180)
         throw new NumberFormatException("422.2");
 
-      //System.out.println("lat = " + lat + " lon = " + lon);
-
       // begin API calls
       String firstJson = fetchURL("https://api.weather.gov/points/" + lat + "," + lon);
       if (firstJson == null || firstJson.trim().isEmpty()) {
         throw new Exception("404.1"); // no data returned from NOAA
       }
-
-      // System.out.println(firstJson);
 
       StringBuilder htmlBuilder = new StringBuilder();
       htmlBuilder.append("<html><body><h1>Forecast</h1>");
@@ -246,14 +234,10 @@ class WebServer {
                 .getJsonArray("coordinates").getJsonNumber(0).doubleValue();
         String forecastUrl = properties.getJsonString("forecast").getString();
 
-        htmlBuilder.append("<strong>").append(city).append(", ").append(state).append("</strong><br>");
-        htmlBuilder.append("At relative coordinates: ").append(relLat).append(" ").append(relLon).append("<br>");
-
-        // System.out.println("Forecast URL: " + forecastUrl);
+        htmlBuilder.append("<h2>").append(city).append(", ").append(state).append("</h2>");
+        htmlBuilder.append("At relative coordinates: ").append(relLat).append(", ").append(relLon).append("<br>");
 
         String secondJson = fetchURL(forecastUrl);
-
-        // System.out.println(secondJson);
 
         if (secondJson == null || secondJson.trim().isEmpty()) {
           throw new Exception("404.2"); // no data returned from NOAA
