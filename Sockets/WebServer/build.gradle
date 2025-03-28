@@ -32,4 +32,11 @@ task FunWebServer(type: JavaExec) {
   standardInput = System.in
 }
 
-
+task fatJar(type: Jar) {
+  manifest {
+    attributes 'Main-Class': 'funHttpServer.WebServer'
+  }
+  archiveBaseName = "${project.name}-all"
+  from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  with jar
+}
