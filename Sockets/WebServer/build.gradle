@@ -32,6 +32,12 @@ task FunWebServer(type: JavaExec) {
   standardInput = System.in
 }
 
+task copyWwwDir(type: Copy) {
+  from 'www'
+  into layout.buildDirectory.dir('libs/www').get().asFile
+}
+
+
 task fatJar(type: Jar) {
   manifest {
     attributes 'Main-Class': 'funHttpServer.WebServer'
@@ -40,3 +46,6 @@ task fatJar(type: Jar) {
   from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
   with jar
 }
+
+// Make sure the fatJar task depends on copyWwwDir
+fatJar.dependsOn copyWwwDir
